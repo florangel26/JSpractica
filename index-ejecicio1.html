@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1</title>
+</head>
+
+<body>
+    <div>
+        <div style="width: 40%;margin: 0 auto">
+            <h2>
+                Escríbenos !!!
+            </h2>
+            <div class="resultado" style="color:green;font-style: italic">
+            </div>
+            <form id="formulario">
+                <div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Nombre completo
+                        </label>
+                        <input id="nombre" type="text">
+                        <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Asunto
+                        </label>
+                        <input id="asunto" type="text">
+                        <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: column;">
+                    <label>
+                        Mensaje
+                    </label>
+                    <textarea id="mensaje"></textarea>
+                    <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                </div>
+                <div>
+                    <button id="botton" type="submit">
+                        Envíar mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+
+    const validarFormato = (valor) =>{   
+        let patron =  new RegExp('^[z-zA-Z ]+$', 'i');
+
+        if(patron.test(valor)){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    
+    const limpiarFormulario = (valor) =>{   
+     
+        document.querySelector(".errorNombre").innerHTML="";
+        document.querySelector(".errorAsunto").innerHTML="";
+        document.querySelector(".errorMensaje").innerHTML="";
+        document.querySelector(".resultado").innerHTML="";
+    };
+   
+
+    let botton = document.getElementById("botton");
+
+    botton.addEventListener("click", function(e){
+        e.preventDefault();
+
+        limpiarFormulario();
+
+        let nombre = document.getElementById("nombre").value;
+        let asunto = document.getElementById("asunto").value;
+        let mensaje = document.getElementById("mensaje").value; 
+        let resultado = true;
+
+        if(nombre.length == 0){
+            document.querySelector(".errorNombre").innerHTML="El nombre es requerido.";
+            resultado = false;
+        }else{
+            if(!validarFormato(nombre)){
+                document.querySelector(".errorNombre").innerHTML="El formato no es permitido solo [az-A-Z].";
+                resultado = false;
+            }
+        }
+
+        if(asunto.length == 0){
+            document.querySelector(".errorAsunto").innerHTML="El asunto es requerido.";
+            resultado = false;
+        }else{
+            if(!validarFormato(asunto)){
+                document.querySelector(".errorAsunto").innerHTML="El formato no es permitido solo [az-A-Z].";
+                resultado = false;
+            }
+        }
+
+        if(mensaje.length == 0){
+            resultado = false;
+            document.querySelector(".errorMensaje").innerHTML="El mensaje es requerido.";
+        }else{
+            if(!validarFormato(mensaje)){
+                document.querySelector(".errorMensaje").innerHTML="El formato no es permitido solo [az-A-Z].";
+                resultado = false;
+            }
+        }
+
+        if(resultado)
+            document.querySelector(".resultado").innerHTML="Mensaje enviado con éxito !!!";
+    });
+
+    </script>
+</body>
+
+</html>
